@@ -22,7 +22,9 @@ public class TaskListServiceImpl implements TaskListService {
     @Override
     public List<TaskListDTO> getTaskList() {
         List<TaskList> taskLists = taskListRepository.findAll();
-
+if (taskLists.isEmpty()){
+    throw new IllegalArgumentException("Task list is empty");
+}
       return   taskLists.stream().map(taskListMapper::toDto).toList();
     }
 
@@ -64,7 +66,6 @@ public class TaskListServiceImpl implements TaskListService {
         TaskList taskListFromDb = taskListRepository.findById(taskListId)
                 .orElseThrow(() -> new IllegalArgumentException("Task list not found with id " + taskListId));
 
-//        System.out.println("CREATED FROM DB = " + taskListFromDb.getCreated());
 
         taskListFromDb.setTitle(taskListDTO.title());
         taskListFromDb.setDescription(taskListDTO.description());

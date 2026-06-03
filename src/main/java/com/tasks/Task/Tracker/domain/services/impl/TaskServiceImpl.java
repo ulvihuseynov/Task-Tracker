@@ -25,6 +25,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDTO> getAllTasks(Long taskListId) {
         List<Task> taskList = taskRepository.findByTaskListTaskListId(taskListId);
+        if(taskList.isEmpty()){
+            throw new IllegalArgumentException("Task list is empty");
+        }
         return taskList.stream().map(taskMapper::toDto).toList();
     }
 
@@ -74,6 +77,10 @@ public class TaskServiceImpl implements TaskService {
         Task taskFromDb = taskRepository.findByTaskListTaskListIdAndTaskId(taskListId, taskId).orElseThrow(
                 () -> new IllegalArgumentException("Task not found ")
         );
+
+        if (!taskFromDb.getTaskList().getTaskListId().equals(taskListId)){
+            throw new IllegalArgumentException("This task does not belong to this task list.");
+        }
 
         taskFromDb.setTaskPriority(taskDTO.taskPriority());
         taskFromDb.setTaskStatus(taskDTO.taskStatus());
