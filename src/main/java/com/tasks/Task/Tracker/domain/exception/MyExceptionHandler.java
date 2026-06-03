@@ -11,11 +11,11 @@ import org.springframework.web.context.request.WebRequest;
 public class MyExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(RuntimeException exception, WebRequest request){
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException exception, WebRequest request){
         ErrorResponse errorResponse=new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 exception.getMessage(),
-                request.getDescription(false)
+                request.getDescription(true)
         );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);

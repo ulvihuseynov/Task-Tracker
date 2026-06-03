@@ -34,6 +34,11 @@ public class TaskListController {
     @PutMapping("/{taskListId}")
     public ResponseEntity<TaskListDTO> updateTaskList(@RequestBody TaskListDTO taskListDTO,
                                                       @PathVariable Long taskListId){
-        return new ResponseEntity<>(taskListService.updateTaskList(taskListDTO,taskListId), HttpStatus.CREATED);
+            return new ResponseEntity<>(taskListService.updateTaskList(taskListDTO,taskListId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{taskListId}")
+    public ResponseEntity<String> deleteTaskList(@PathVariable Long taskListId){
+        return new ResponseEntity<>(taskListService.deleteTaskList(taskListId), HttpStatus.OK);
     }
 }

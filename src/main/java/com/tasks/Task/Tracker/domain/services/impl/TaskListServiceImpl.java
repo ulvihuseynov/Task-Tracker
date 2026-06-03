@@ -72,4 +72,13 @@ public class TaskListServiceImpl implements TaskListService {
 
         return taskListMapper.toDto(taskListRepository.save(taskListFromDb));
     }
+
+    @Override
+    public String deleteTaskList(Long taskListId) {
+
+        TaskList taskList = taskListRepository.findById(taskListId)
+                .orElseThrow(() -> new IllegalArgumentException("Task list not found with id " + taskListId));
+        taskListRepository.delete(taskList);
+        return "Task list successfully with ID "+ taskListId;
+    }
 }

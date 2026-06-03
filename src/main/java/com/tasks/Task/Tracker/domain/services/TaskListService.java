@@ -14,4 +14,6 @@ public interface TaskListService {
     TaskListDTO getTaskListById(Long taskListId);
 
     TaskListDTO updateTaskList(TaskListDTO taskListDTO, Long taskListId);
+
+    String deleteTaskList(Long taskListId);
 }
